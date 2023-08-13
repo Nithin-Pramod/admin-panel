@@ -1,7 +1,0 @@
-bcrypt -------    https://www.browserling.com/tools/bcrypt 
-
-
-sql statement for adding admin --  insert into user values(1,'mail@gmail.com','name','lastname','$2a$10$8v03h/73/zhUnAtwG8Dmb.bhKJf8DiWIDXvhJl8M9tb4W1AQ.hbUq');  -- hello
-
-                                    insert into role values(1,'ROLE_ADMIN');
-                                    insert into users_roles values(1,1);
