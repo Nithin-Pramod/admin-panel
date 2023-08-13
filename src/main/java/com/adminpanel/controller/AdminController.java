@@ -9,14 +9,12 @@ import com.adminpanel.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -48,7 +46,7 @@ public class AdminController {
     public String saveEmployee(@ModelAttribute("user") UserRegistrationDto user) {
         // save employee to database
         userService.save(user);
-        return "redirect:/listUsers";
+        return "redirect:/admin/listUsers";
     }
 
     @GetMapping("/deleteEmployee/{id}")
@@ -56,7 +54,7 @@ public class AdminController {
 
         // call delete employee method
         this.userService.deleteUserById(id);
-        return "redirect:/listUsers";
+        return "redirect:/admin/listUsers";
     }
 
     @GetMapping("/addAdmin")
@@ -70,7 +68,7 @@ public class AdminController {
     public String makeUserAdmin(@PathVariable("id") Long userId) {
         roleService.updateRoleNameById(userId,"ROLE_ADMIN");
 
-        return "redirect:/addAdmin";
+        return "redirect:/admin/addAdmin";
     }
 
     @GetMapping("/updateUser/{id}")
@@ -87,7 +85,7 @@ public class AdminController {
     public String updateUser(@PathVariable("id") Long userId, @ModelAttribute("user") UserRegistrationDto updatedUser) {
         userService.updateUser(userId, updatedUser);
 
-        return "redirect:/listUsers"; // Redirect with success parameter
+        return "redirect:/admin/listUsers"; // Redirect with success parameter
     }
 
 }

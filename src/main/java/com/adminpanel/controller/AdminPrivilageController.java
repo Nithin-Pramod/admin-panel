@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/addUserByAdmin")
+@RequestMapping("/admin/addUserByAdmin")
 public class AdminPrivilageController {
 
     private UserService userService;
@@ -32,6 +32,6 @@ public class AdminPrivilageController {
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         userService.save(registrationDto);
-        return "redirect:/listUsers";
+        return "redirect:/admin/listUsers";
     }
 }

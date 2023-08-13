@@ -78,7 +78,7 @@
                 <!-- Display "Make Admin" button if the user is not an admin -->
                 <a th:if="${!#lists.contains(user.roles, 'ROLE_ADMIN')}"
                    th:unless="${#authentication.principal.username == user.email}"
-                   th:href="@{/makeAdmin/{id}(id=${user.id})}"
+                   th:href="@{/admin/makeAdmin/{id}(id=${user.id})}"
                    class="btn btn-success">Make as Admin</a>
             </td>
         </tr>

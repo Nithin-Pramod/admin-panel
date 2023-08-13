@@ -44,8 +44,8 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li sec:authorize="hasRole('ADMIN')"><a th:href="@{/addAdmin}">Add Admin</a></li>
-				<li sec:authorize="hasRole('ADMIN')"><a th:href="@{/listUsers}">List Users</a></li>
+				<li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/addAdmin}">Add Admin</a></li>
+				<li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/listUsers}">List Users</a></li>
 			</ul>
 			<ul></ul>
 			<ul class="nav navbar-nav navbar-right">

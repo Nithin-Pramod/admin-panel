@@ -28,7 +28,7 @@
                 <div class="alert alert-info">User information updated successfully!</div>
             </div>
 
-            <form th:action="@{/updateUser/{id}(id=${userId})}" method="post" th:object="${user}">
+            <form th:action="@{/admin/updateUser/{id}(id=${userId})}" method="post" th:object="${user}">
                 <input type="hidden" name="_method" value="put" /> <!-- Set the HTTP method to PUT -->
 
                 <div class="form-group">
