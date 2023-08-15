@@ -71,6 +71,13 @@ public class AdminController {
         return "redirect:/admin/addAdmin";
     }
 
+    @GetMapping("/makeUser/{id}")
+    public String makeUserByAdmin(@PathVariable("id") Long userId) {
+        roleService.updateRoleNameById(userId,"ROLE_USER");
+        return "redirect:/admin/addAdmin";
+    }
+
+
     @GetMapping("/updateUser/{id}")
     public String updateUserForm(@PathVariable("id") Long userId, Model model) {
         User user = userRepository.findById(userId)

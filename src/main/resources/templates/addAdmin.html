@@ -88,6 +88,9 @@
                 <a th:unless="${user.roles[0].name == 'ROLE_ADMIN' || #authentication.principal.username == user.email}"
                    th:href="@{/admin/makeAdmin/{id}(id=${user.id})}"
                    class="btn btn-success">Make as Admin</a>
+                <a th:if="${user.roles[0].name == 'ROLE_ADMIN' && #authentication.principal.username != user.email}"
+                   th:href="@{/admin/makeUser/{id}(id=${user.id})}"
+                   class="btn btn-warning">Make as User </a>
             </td>
         </tr>
 
