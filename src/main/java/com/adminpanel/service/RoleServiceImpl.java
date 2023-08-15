@@ -8,12 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RoleServiceImpl implements RoleService{
 
+    @Autowired
     private  RoleRepository roleRepository;
 
-    @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     @Transactional
     public void updateRoleNameById(Long roleId, String newName) {

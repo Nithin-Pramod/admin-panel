@@ -75,13 +75,18 @@
                 <span th:each="role : ${user.roles}" th:text="${role.name} + ' '"></span>
             </td>
             <td>
+                <!-- Debugging: Display user roles -->
+                <p>User Roles: <span th:each="role : ${user.roles}" th:text="${role.name} + ' '"></span></p>
+                <p>Is Admin: <span th:text="${user.roles[0].name == 'ROLE_ADMIN'}"></span></p>
+                <p>Is Self: <span th:text="${#authentication.principal.username == user.email}"></span></p>
+
                 <!-- Display "Make Admin" button if the user is not an admin -->
-                <a th:if="${!#lists.contains(user.roles, 'ROLE_ADMIN')}"
-                   th:unless="${#authentication.principal.username == user.email}"
+                <a th:unless="${user.roles[0].name == 'ROLE_ADMIN' || #authentication.principal.username == user.email}"
                    th:href="@{/admin/makeAdmin/{id}(id=${user.id})}"
                    class="btn btn-success">Make as Admin</a>
             </td>
         </tr>
+
         </tbody>
     </table>
 
