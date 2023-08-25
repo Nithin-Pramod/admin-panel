@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -93,6 +94,32 @@ public class AdminController {
         userService.updateUser(userId, updatedUser);
 
         return "redirect:/admin/listUsers"; // Redirect with success parameter
+    }
+
+
+    @GetMapping("/search")
+    public String searchUsers(@RequestParam("queryType") String queryType,
+                              @RequestParam("queryWord") String query,
+                              Model model) {
+
+        List<User> users = new ArrayList<>();
+
+        if("firstName".equals(queryType)){
+            users = userRepository.findByFirstNameContaining(query);
+        } else if ("lastName".equals(queryType)) {
+            users = userRepository.findByLastNameContaining(query);
+        } else if ("email".equals(queryType)) {
+            users = userRepository.findByEmailContaining(query);
+        }
+
+        for (User user : users) {
+            System.out.println("User Found: " + user.getFirstName() + " " + user.getLastName() + " - " + user.getEmail());
+        }
+        if(users.isEmpty()){
+            return "no_user_found";
+        }
+        model.addAttribute("listSearchUsers",users);
+        return "user_search_results";
     }
 
 }
