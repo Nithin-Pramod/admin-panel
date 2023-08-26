@@ -1,11 +1,13 @@
 package com.adminpanel.controller;
 
 import com.adminpanel.dto.UserRegistrationDto;
+import com.adminpanel.exception.CustomException;
 import com.adminpanel.model.User;
 import com.adminpanel.repository.UserRepository;
 import com.adminpanel.service.RoleService;
 import com.adminpanel.service.RoleServiceImpl;
 import com.adminpanel.service.UserServiceImpl;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/admin")
@@ -44,8 +48,17 @@ public class AdminController {
     }
 
     @PostMapping("/saveUser")
-    public String saveEmployee(@ModelAttribute("user") UserRegistrationDto user) {
+    public String saveEmployee(@ModelAttribute("user") UserRegistrationDto user) throws CustomException{
+
+        System.out.println("Inside Save user mapping");
         // save employee to database
+        String email = user.getEmail();
+        System.out.println("mail id is : " + email);
+        if(!isValidEmail(email)){
+            System.out.println("Inside if statement");
+            throw new CustomException("Mail id not valid");
+        }
+
         userService.save(user);
         return "redirect:/admin/listUsers";
     }
@@ -120,6 +133,26 @@ public class AdminController {
         }
         model.addAttribute("listSearchUsers",users);
         return "user_search_results";
+    }
+
+
+    public  boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    @GetMapping("/notValidated")
+    public String showNotValdatedForm(Model model){
+        User user = new User();
+        model.addAttribute("user",user);
+        return "notValidated";
+    }
+
+    @GetMapping("/somethingGoesWrong")
+    public String showSGWPage(){
+        return "somethingGoesWrong";
     }
 
 }

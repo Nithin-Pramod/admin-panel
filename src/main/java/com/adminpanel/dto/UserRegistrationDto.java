@@ -1,6 +1,8 @@
 package com.adminpanel.dto;
 
 public class UserRegistrationDto {
+
+
 	private String firstName;
 	private String lastName;
 	private String email;

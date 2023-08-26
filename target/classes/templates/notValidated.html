@@ -7,6 +7,15 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+
+    <style>
+        /* Style for the red text */
+        .error-text {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -29,16 +38,16 @@
 
 <br>
 <br>
+
+
+<div class="container dashboard-container">
+    <p class="error-text">Invalid email, please try again</p>
+</div>
 <!-- Create HTML registration form -->
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
-            <!-- success message -->
-            <div th:if="${param.success}">
-                <div class="alert alert-info">You've successfully registered
-                    to our app!</div>
-            </div>
 
             <h1>Add User</h1>
 
@@ -54,13 +63,6 @@
                         id="lastName" class="form-control" th:field="*{lastName}"
                         required autofocus="autofocus" />
                 </div>
-
-<!--                <div class="form-group">-->
-<!--                    <label class="control-label" for="email"> Email </label>-->
-<!--                    <input id="email" class="form-control" th:field="*{email}" required autofocus="autofocus"-->
-<!--                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"-->
-<!--                           title="Please enter a valid email address" />-->
-<!--                </div>-->
 
                 <div class="form-group">
                     <label class="control-label" for="email"> Email </label>
