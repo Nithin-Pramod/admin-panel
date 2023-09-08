@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +35,7 @@ public class AdminPrivilageController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) throws CustomException{
+    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) throws CustomException {
         System.out.println("Inside Save user mapping");
         // save employee to database
         String email = registrationDto.getEmail();
@@ -44,6 +45,8 @@ public class AdminPrivilageController {
             throw new CustomException("Mail id not valid");
         }
         userService.save(registrationDto);
+
+
         return "redirect:/admin/listUsers";
     }
 

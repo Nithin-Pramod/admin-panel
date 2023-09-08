@@ -7,19 +7,23 @@ public class UserRegistrationDto {
 	private String lastName;
 	private String email;
 	private String password;
+
+	private boolean blocked;
 	
 	public UserRegistrationDto(){
 		
 	}
 	
-	public UserRegistrationDto(String firstName, String lastName, String email, String password) {
+	public UserRegistrationDto(String firstName, String lastName, String email, String password, Boolean blocked) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.blocked=blocked;
 	}
-	
+
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -44,4 +48,13 @@ public class UserRegistrationDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
 }

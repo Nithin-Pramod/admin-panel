@@ -32,6 +32,9 @@ public class User {
 	private String email;
 	
 	private String password;
+
+	private boolean blocked;
+
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
@@ -47,13 +50,14 @@ public class User {
 		
 	}
 	
-	public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+	public User(String firstName, String lastName, String email, String password, Collection<Role> roles, Boolean blocked) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
+		this.blocked=blocked;
 	}
 	public Long getId() {
 		return id;
@@ -92,4 +96,12 @@ public class User {
 		this.roles = roles;
 	}
 
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
 }

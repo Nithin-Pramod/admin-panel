@@ -28,4 +28,5 @@ public class GlobalExceptionHandler {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/somethingGoesWrong");
         return modelAndView;
     }
+
 }

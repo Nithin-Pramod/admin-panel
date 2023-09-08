@@ -9,12 +9,16 @@ import com.adminpanel.service.RoleServiceImpl;
 import com.adminpanel.service.UserServiceImpl;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,9 +76,16 @@ public class AdminController {
     }
 
     @GetMapping("/addAdmin")
-    public String showUsers(Model model){
+    public String showUsers(Model model, Authentication authentication){
+
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+
         List<User> users = userRepository.findAll();
         model.addAttribute("listUsers",users);
+        if (user.isBlocked()) {
+            return "blocked";
+        }
         return "addAdmin";
     }
 
@@ -93,12 +104,19 @@ public class AdminController {
 
 
     @GetMapping("/updateUser/{id}")
-    public String updateUserForm(@PathVariable("id") Long userId, Model model) {
+    public String updateUserForm(@PathVariable("id") Long userId, Model model, Authentication authentication) {
+
+        String username = authentication.getName();
+        User currentUser = userService.findByUsername(username);
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
 
         model.addAttribute("user", user);
         model.addAttribute("userId", userId); // Add the userId to be used in the form action
+        if (currentUser.isBlocked()){
+            return "blocked";
+        }
         return "updateUser";
     }
 
@@ -153,6 +171,21 @@ public class AdminController {
     @GetMapping("/somethingGoesWrong")
     public String showSGWPage(){
         return "somethingGoesWrong";
+    }
+
+    @GetMapping("/toggleBlockUser/{id}")
+    public String blockUser(@PathVariable("id") Long userId, @AuthenticationPrincipal UserDetails currentUser) {
+
+        System.out.println("in toggle block user");
+
+        User user = userRepository.findById(userId)
+                .orElse(null);
+        if (!user.getEmail().equals(currentUser.getUsername())) {
+            user.setBlocked(!user.isBlocked());
+            System.out.println("user block status : " +  user.isBlocked());
+            userRepository.save(user);
+        }
+        return "redirect:/admin/addAdmin";
     }
 
 }
